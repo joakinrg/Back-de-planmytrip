@@ -1,8 +1,10 @@
+import { Viaje } from 'src/viajes/entity/Viaje.entity';
 import {
   Column,
   Entity,
   Index,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -27,4 +29,7 @@ export class User {
   })
   @JoinColumn()
   persona: Persona;
+
+  @OneToMany(() => Viaje, (viaje) => viaje.usuario)
+  viajes: Viaje[];
 }
