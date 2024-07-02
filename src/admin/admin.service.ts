@@ -28,11 +28,11 @@ export class AdminService {
     }
 
     const salt = await bcrypt.genSaltSync();
-    const hashedPassword = await bcrypt.hash(newAdmin.contraseña, salt);
+    const hashedPassword = await bcrypt.hash(newAdmin.contrasena, salt);
 
     const createdAdmin = {
       ...newAdmin,
-      contraseña: hashedPassword,
+      contrasena: hashedPassword,
     };
 
     return await this.adminRepository.save(createdAdmin);

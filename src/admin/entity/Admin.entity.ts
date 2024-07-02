@@ -9,5 +9,5 @@ export class Admin {
   correo: string;
 
   @Column({ type: 'varchar', length: 255 })
-  contraseña: string;
+  contrasena: string;
 }

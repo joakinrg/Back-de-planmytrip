@@ -73,16 +73,16 @@ export class AuthService {
 
   // Inicio de sesion admin
   async loginAdmin({ email, password }: LoginDto) {
-    const admin = (await this.adminSevice.getByEmail(email)) as any;
+    const [admin] = (await this.adminSevice.getByEmail(email)) as any;
 
     if (!admin) {
       throw new NotFoundException('Usuario no encontrado papi');
     }
 
-    const storedPassword = admin.contraseña;
-    const checkPassword = await bcrypt.compare(password, storedPassword);
+    const storedPasword = admin.contrasena;
+    const passwordCheck = await bcrypt.compare(password, storedPasword);
 
-    if (!checkPassword) {
+    if (!passwordCheck) {
       throw new BadRequestException('Contraseña incorrecrta mi rey');
     }
 

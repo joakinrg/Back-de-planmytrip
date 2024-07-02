@@ -47,12 +47,13 @@ export class UserService {
     return users;
   }
 
-  async getById(id: string): Promise<User | NotFoundException> {
+  async findUserById(id: string) {
     const user = await this.userRepository.findOneBy({ id });
 
     if (!user) {
-      return new NotFoundException('No se encontro el usuario papi');
+      throw new NotFoundException('Usuario no encontrado');
     }
+
     return user;
   }
 
@@ -64,21 +65,23 @@ export class UserService {
     }
     return user;
   }
-
-  async updatePersona(id: string, newData: Partial<UpdatePersonaDto>) {
-    const user = (await this.getById(id)) as User;
+  async updatePersona(
+    id: string,
+    atributos: Partial<UpdatePersonaDto>,
+  ): Promise<User> {
+    const user = await this.findUserById(id);
 
     if (!user) {
-      return new NotFoundException('No se encontro el usuario papi');
+      throw new NotFoundException('Usuario no encontrado');
     }
 
-    Object.assign(user.persona, newData);
+    Object.assign(user.persona, atributos);
 
-    return await this.userRepository.save(user);
+    return this.userRepository.save(user);
   }
 
-  async updateEmail(id: string, email: string) {
-    const user = (await this.getById(id)) as User;
+  async updateEmail(idUser: string, email: string) {
+    const user = (await this.findUserById(idUser)) as User;
 
     if (!user) {
       return new NotFoundException('No se encontro el usuario papi');
@@ -98,7 +101,7 @@ export class UserService {
   }
 
   async updatePassword(id: string, password: string) {
-    const user = (await this.getById(id)) as User;
+    const user = (await this.findUserById(id)) as User;
 
     if (!user) {
       return new NotFoundException('No se encontro el usuario papi');
@@ -113,7 +116,7 @@ export class UserService {
   }
 
   async delete(id: string) {
-    const user = await this.getById(id);
+    const user = await this.findUserById(id);
 
     if (!user) {
       return new NotFoundException('No se encontro el usuario papi');
