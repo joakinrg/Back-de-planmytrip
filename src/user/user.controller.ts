@@ -47,12 +47,18 @@ export class UserController {
   }
 
   @Patch('/email/:id')
-  async updateUserEmail(@Param('id') id: string, @Body() email: string) {
+  async updateUserEmail(
+    @Param('id') id: string,
+    @Body() { email }: { email: string },
+  ) {
     return this.userService.updateEmail(id, email);
   }
 
   @Patch('/password/:id')
-  async updateUserPassword(@Param('id') id: string, @Body() password: string) {
+  async updateUserPassword(
+    @Param('id') id: string,
+    @Body() { password }: { password: string },
+  ) {
     return this.userService.updatePassword(id, password);
   }
 

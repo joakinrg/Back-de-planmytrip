@@ -102,7 +102,6 @@ export class UserService {
 
   async updatePassword(id: string, password: string) {
     const user = (await this.findUserById(id)) as User;
-
     if (!user) {
       return new NotFoundException('No se encontro el usuario papi');
     }
